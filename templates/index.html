@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>모니터링 시스템</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+        }
+        .card h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .card p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        @media only screen and (max-width: 600px) {
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        function fetchData() {
+            fetch('/get_data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // 데이터를 콘솔에 출력하여 구조 확인
+                    var container = document.getElementById('data-container');
+                    container.innerHTML = '';
+                    data.forEach(function(doc) {
+                        var items = [
+                            {label: '암모니아 수치 (ppm)', value: doc.gas},
+                            {label: '전압 (V)', value: doc.elec},
+                            {label: '환풍기 상태', value: doc.fan === 1 ? "On" : "Off"},
+                            {label: '방향제 분사 횟수 (회)', value: doc.sprayCount}
+                        ];
+                        items.forEach(function(item) {
+                            var card = document.createElement('div');
+                            card.className = 'card';
+                            card.innerHTML = `
+                                <h2>${item.label}</h2>
+                                <p>${item.value !== undefined ? item.value : '데이터 없음'}</p>
+                            `;
+                            container.appendChild(card);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(fetchData, 5000); // 5초마다 데이터를 가져와 갱신
+    </script>
+</head>
+<body onload="fetchData()">
+    <h1>모니터링 시스템</h1>
+    <div id="data-container" class="card-container">
+        <!-- 데이터가 여기에 로드됩니다 -->
+    </div>
+</body>
+</html>

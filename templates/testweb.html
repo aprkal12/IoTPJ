@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sensor Data</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>MQ-137 Sensor Data</h1>
+    <div id="sensor-data"></div>
+
+    <script>
+        const socket = io();
+
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+
+        socket.on('response', function(data) {
+            console.log('Received data:', data);
+            const sensorDataDiv = document.getElementById('sensor-data');
+            sensorDataDiv.innerHTML = `Sensor Value: ${data.value} ppm<br>Timestamp: ${new Date(data.timestamp * 1000)}`;
+        });
+
+        socket.on('disconnect', function() {
+            console.log('Disconnected from server');
+        });
+    </script>
+</body>
+</html>
