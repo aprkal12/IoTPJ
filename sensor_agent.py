@@ -98,14 +98,14 @@ class TestAgentReceiveThread(threading.Thread):
 
 
                         # 수정 필요 fan_flag 는 스레드 실행하면 매번 초기화 됨
-                        if gas < 10.0 and dict_msg['fan'] == 1: # 가스수치가 기준치 아래로 돌아오고 환풍기가 켜져있는 상태
+                        if gas < 20.0 and dict_msg['fan'] == 1: # 가스수치가 기준치 아래로 돌아오고 환풍기가 켜져있는 상태
                             dict_msg['fan'] = 0
                             sendmsg = "2"
-                        elif gas >= 10.0 and dict_msg['fan'] == 0: # 가스수치가 기준치 초과되고 환풍기가 꺼져있는 상태
+                        elif gas >= 20.0 and dict_msg['fan'] == 0: # 가스수치가 기준치 초과되고 환풍기가 꺼져있는 상태
                             dict_msg['fan'] = 1
                             dict_msg['sprayCount'] += 1
                             sendmsg = "1"    
-                        elif gas >= 10.0 and dict_msg['fan'] == 1: # 가스수치가 기준치 초과되고 환풍기가 켜져있는 상태
+                        elif gas >= 20.0 and dict_msg['fan'] == 1: # 가스수치가 기준치 초과되고 환풍기가 켜져있는 상태
                             sendmsg = "0"
                         else:
                             sendmsg = "0"
