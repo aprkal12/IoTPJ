@@ -15,7 +15,9 @@ document_name = 'mq137'
 
 dict_msg = {}
 dict_msg['fan'] = 0
-dict_msg['sprayCount'] = 0
+
+if dict_msg.get('sprayCount') == None: # 스프레이 카운트가 없으면 0으로 초기화
+    dict_msg['sprayCount'] = 0
 
 class TestAgent:
     port = 10020
