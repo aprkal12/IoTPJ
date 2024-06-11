@@ -40,7 +40,7 @@ class TestAgent:
                 client_socket, addr = self.server_socket.accept()
                 print("Connection Requested.")
                 TestAgentReceiveThread(client_socket).start()
-                if count == 200:
+                if count == 10: # 요금 폭탄 방지용
                     print("Data is saved to Firestore")
                     doc_ref = db.collection(collection_name).document(document_name)
                     doc_ref.set(dict_msg)

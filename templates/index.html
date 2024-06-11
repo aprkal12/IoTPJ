@@ -62,7 +62,7 @@
                         var items = [
                             {label: '암모니아 수치 (ppm)', value: doc.gas},
                             {label: '전압 (V)', value: doc.elec},
-                            {label: '환풍기 상태', value: doc.fan === 1 ? "On" : "Off"},
+                            {label: '환풍기 상태', value: doc.fan ? "On" : "Off"},
                             {label: '방향제 분사 횟수 (회)', value: doc.sprayCount}
                         ];
                         items.forEach(function(item) {
